@@ -1,14 +1,17 @@
 version: '2.1'
+#creating container for redis
 services:  
  redis_image:
   image: redis
   container_name: cachev1  
   ports:
    - "6379:6380" 
+#creating container for web api(backend)
  web:              
   build:
    context: .
    dockerfile: ./Backend/WeatherAPIDotNetCore/Dockerfile
+#setting up environment variables
   environment:
    - CosmosConnectionString=$CosmosConnectionString
    - CosmosDatabaseName=$CosmosDatabaseName
@@ -23,7 +26,7 @@ services:
    - "5000:80"       
   depends_on:
    - redis_image
-
+#creating container for angular(frontend)
  weatherapp:              
   build:
    context: .
